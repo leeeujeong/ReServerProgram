@@ -44,7 +44,7 @@ public class BoardListner implements ServletContextListener {
     		
     		Trigger trigger = TriggerBuilder.newTrigger()
     				.withIdentity("trigger", "group")
-    				.withSchedule(CronScheduleBuilder.cronSchedule(""))
+    				.withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *"))
     				.build();
     		
     		scheduler.scheduleJob(job, trigger);

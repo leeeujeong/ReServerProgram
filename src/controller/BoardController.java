@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ModelAndView;
+import model.BoardListService;
 import model.BoardService;
+import model.BoardViewService;
+import model.DeleteBoardService;
+import model.InsertBoardService;
 
 @WebServlet("*.do")
 
@@ -30,8 +34,26 @@ public class BoardController extends HttpServlet {
 		
 		ModelAndView mav = null;
 		BoardService service = null;
-		switch (command) {
 		
+		switch (command) {
+		case "boradList.do" :
+			service = new BoardListService();
+			break;
+		case "view.do" :
+			service = new BoardViewService();
+			break;
+		case "insertForm.do" :
+			mav = new ModelAndView("views/insert.jsp", false);
+			break;
+		case "insert.do" :
+			service = new InsertBoardService();
+			break;
+		case "delete.do" :
+			service = new DeleteBoardService();
+			break;
+		case "insertReply.do" :
+			
+			break;
 		}
 		
 		if (service != null) {

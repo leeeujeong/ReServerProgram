@@ -8,10 +8,10 @@
 <script>
 	setTimeout(function(){
 		location.href='boradList.do'
-	}, 5000);
+	}, 3000);
 </script>
 </head>
 <body>
-	<h1>5초후에 게시판으로 이동합니다.</h1>
+	<h1>3초후에 게시판으로 이동합니다.</h1>
 </body>
 </html>

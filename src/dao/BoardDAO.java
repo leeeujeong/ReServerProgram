@@ -1,12 +1,16 @@
 package dao;
 
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import dto.BoardDTO;
+import dto.ReplyDTO;
 import mybatis.config.DBService;
 
 public class BoardDAO {
 
-	/* BoardDao의 모든 메소드는 factory에서 SqlSession을 얻어 낸다. */
 	private SqlSessionFactory factory;
 	
 	private static BoardDAO instance;
@@ -20,70 +24,73 @@ public class BoardDAO {
 		return instance;
 	}
 	
-//	// 1. 학생 목록
-//	public List<Student> selectAllStudent() {
-//		SqlSession ss = factory.openSession();
-//		List<Student> list = ss.selectList("dao.student.selectAllStudent");  // mapper's namespace + id
-//		ss.close();
-//		return list;
-//	}
-//	
-//	// 2. 전체 학생 수
-//	public int getTotalCount() {
-//		SqlSession ss = factory.openSession();
-//		int totalCount = ss.selectOne("dao.student.getTotalCount");
-//		ss.close();
-//		return totalCount;
-//	}
-//	
-//	// 3. 전체 학생 평균
-//	public double getAverage() {
-//		SqlSession ss = factory.openSession();
-//		double average = ss.selectOne("dao.student.getAverage");
-//		ss.close();
-//		return average;
-//	}
-//	
-//	// 4. 학생 등록
-//	public int insertStudent(Student student) {
-//		SqlSession ss = factory.openSession(false);
-//		int result = ss.insert("dao.student.insertStudent", student);
-//		if (result > 0) ss.commit();
-//		ss.close();
-//		return result;
-//	}
-//	
-//	// 5. 학생 삭제
-//	public int deleteStudent(String sno) {
-//		SqlSession ss = factory.openSession(false);
-//		int result = ss.delete("dao.student.deleteStudent", sno);
-//		if (result > 0) ss.commit();
-//		ss.close();
-//		return result;
-//	}
-//	
-//	// 6. 학생 정보 조회
-//	public Student selectStudentBySno(String sno) {
-//		SqlSession ss = factory.openSession();
-//		Student student = ss.selectOne("dao.student.selectStudentBySno", sno);
-//		ss.close();
-//		return student;
-//	}
-//	
-//	// 7. 학생 수정
-//	public int updateStudent(Student student) {
-//		SqlSession ss = factory.openSession(false);
-//		int result = ss.update("dao.student.updateStudent", student);
-//		if (result > 0) ss.commit();
-//		ss.close();
-//		return result;
-//	}
-//	//8. Top3 목록 반환
-//	public List<Student> selectTop3List(){
-//		SqlSession ss = factory.openSession();
-//		List<Student> top3List = ss.selectList("dao.student.selectTop3List");
-//		ss.close();
-//		return top3List;
-//	}
+	//board
+	
+	public List<BoardDTO> selectBoardList(){
+		SqlSession ss = factory.openSession();
+		List<BoardDTO> list = ss.selectList("dao.board.selectBoardList");
+		ss.close();
+		return list;
+	}
+	public BoardDTO selectBoardView(Long no) {
+		SqlSession ss = factory.openSession();
+		BoardDTO board = ss.selectOne("dao.board.selectBoardView",no);
+		ss.close();
+		return  board;
+	}
+	public int updateBoardHit(Long no) {
+		SqlSession ss = factory.openSession();
+		int result = ss.update("dao.board.updateBoardHit", no);
+		if(result >0)ss.commit();
+		ss.close();
+		return result;
+	}
+	public int insertBoard(BoardDTO board) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.insert("dao.board.insertBoard", board);
+		if(result>0) ss.commit();
+		ss.close();
+		return result;
+	}
+	
+	public int deleteBoard(Long no) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.delete("dao.board.deleteBoard", no);
+		if(result >0) ss.commit();
+		ss.close();
+		return result;
+	}
+	
+	public int getTotalCount() {
+		SqlSession ss = factory.openSession();
+		int totalCount = ss.selectOne("dao.board.getTotalCount");
+		ss.close();
+		return totalCount;
+	}
+	//reply
+	
+	public int insertReply(ReplyDTO reply) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.insert("dao.board.insertReply", reply);
+		if(result >0) ss.commit();
+		ss.close();
+		return result;
+	}
+	public List<ReplyDTO> selectReplyList(Long no){
+		SqlSession ss = factory.openSession();
+		List<ReplyDTO> list = ss.selectList("dao.baord.selectReplyList", no);
+		ss.close();
+		return list;
+	}
+	
+	//batch
+	
+	public BoardDTO selectMaxHit() {
+		SqlSession ss = factory.openSession();
+		BoardDTO maxhit = ss.selectOne("dao.baord.selectMaxHit");
+		ss.close();
+		return maxhit;
+	}
+
 	
 }

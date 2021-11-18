@@ -5,5 +5,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="dao.board">
 
+	<!-- board -->
 	
+	<select id="selectBoardList" parameterType="dto.BoardDTO" resultType="dto.BoardDTO">
+		SELECT no, author, title, content, hit, ip, postdate
+		  FROM board
+	</select>
+	
+	<select id="selectBoardView" parameterType="Long" resultType="dto.BoardDTO">
+		SELECT no, author, title, content, hit, ip, postdate
+		  FROM board
+		 WHERE no=#{no}
+	</select>
+	
+	<update id="updateBoardHit" parameterType="Long">
+		UPDATE board
+		   SET hit = hit +1
+		 WHERE no = #{no}
+	</update>
+	
+	<insert id="insertBoard" parameterType="dto.BoardDTO">
+		INSERT INTO board VALUES(board_seq.nextval, #{author}, #{title}, #{content}, 0, #{ip}, SYSDATE)
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="Long">
+		DELETE
+		 FROM board
+		 WHERE no = #{no}
+	</delete>
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM borad
+	</select>
+
+	
+	<!-- reply -->
+	<insert id="insertReply" parameterType="dto.ReplyDTO">
+		INSERT INTO reply VALUES (reply_seq.nextval, #{author}, #{content}, #{ip}, #{board_no}, SYSDATE)
+	</insert>
+	
+	<select id="selectReplyList" parameterType="Long" resultType="dto.ReplyDTO">
+		SELECT no, author, content, ip, board_no, postdate
+		  FROM reply
+		 WHERE no= #{no}
+	</select>
+	
+	<!-- batch -->
+	<select id="selectMaxHit" parameterType="dto.BoardDTO">
+		SELECT a.title, a.content, a.hit
+		  FROM (SELECT title, content, hit FROM board ORDER BY hit DESC)a
+		 WHERE ROWNUM =1
+	</select>
 </mapper>

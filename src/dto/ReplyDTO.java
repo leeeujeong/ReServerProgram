@@ -36,7 +36,12 @@ public class ReplyDTO {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-
+	public Long getBoard_no() {
+		return board_no;
+	}
+	public void setBoard_no(Long board_no) {
+		this.board_no = board_no;
+	}
 	public Date getPostdate() {
 		return postdate;
 	}
